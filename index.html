@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="./img/travel_icon.png" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <title>Travel Agency | Premium Travel Experiences</title>
+</head>
+<body>
+
+  <main>
+    <!-- Admin Section -->
+    <section id="admin_section" style="display: none;">
+      <div class="custom-container-fluid">
+        <div class="custom-row">
+
+          <!-- Sidebar -->
+          <nav class="sidebar">
+            <div class="sidebar-header">
+              <img src="./img/travel_icon.png" alt="Logo" width="50" class="sidebar-logo" />
+              <h5>Admin Panel</h5>
+              <p class="small-text">Welcome Back Admin</p>
+            </div>
+            <ul class="nav-list">
+              <li><a href="#" class="nav-link active"><i class="fas fa-home"></i> Dashboard</a></li>
+              <li><a href="#" class="nav-link"><i class="fas fa-map"></i> Destinations</a></li>
+              <li><a href="#" class="nav-link"><i class="fas fa-users"></i> Users</a></li>
+              <li><a onclick="logoutAdmin()" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+          </nav>
+
+          <!-- Main Content -->
+          <main class="main-content">
+            <div class="header-row">
+              <div class="alert success-alert hidden" id="successAlert"></div>
+            </div>
+
+            <!-- Add Destination Form -->
+            <div class="form-section">
+              <h4>Add New Destination</h4>
+              <form method="POST" id="destinationForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" placeholder="title" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="place">Place</label>
+                    <input type="text" id="place" placeholder="place" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="subtitle">Subtitle</label>
+                    <input type="text" id="subtitle" placeholder="Subtitle" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="image">Images URLs (separate with commas)</label>
+                    <input type="text" id="images" placeholder="https://example.com/image.jpg" required />
+                  </div>
+                  <div class="form-group full-width">
+                    <label for="description">Description</label>
+                    <textarea id="description" placeholder="Description..." rows="3" required></textarea>
+                  </div>
+                  <div class="form-actions">
+                    <button type="button" id="cancelEdit" class="btn-secondary" onclick="cancel()">Cancel</button>
+                    <button type="submit" class="btn-primary" id="add" onclick="adddestination()">Add Destination</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- Destination Table -->
+            <div class="table-section">
+              <div class="header-row">
+                <h4>List of Destinations</h4>
+                <div class="alert error-alert hidden" id="errorAlert"></div>
+              </div>
+              <div class="table-wrapper">
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width:15%;">Title</th>
+                      <th style="width:15%;">Place</th>
+                      <th style="width:15%;">Subtitle</th>
+                      <th style="width:35%;">Description</th>
+                      <th style="width:15%;">Image</th>
+                      <th style="width:15%;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="destinationTable">
+                    <!-- Data via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </main>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Login Form -->
+    <section id="login_form" style="display: none;" onsubmit="loginAdmin(event)">
+      <div class="custom-container">
+        <div class="login-card">
+          <div class="card-body">
+            <div class="text-center">
+              <img src="./img/travel_icon.png" alt="Logo" width="60" class="logo" />
+              <h3>Admin Login</h3>
+            </div>
+            <form id="loginForm" method="POST" novalidate>
+              <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" name="email" id="email" required placeholder="admin@example.com" />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required placeholder="********" />
+              </div>
+              <div class="form-group full-width">
+                <button type="submit" onclick="loginAdmin()" class="log">Log In</button>
+              </div>
+            </form>
+            <div class="text-center mt">
+              <button onclick="goback()" class="back-button">⬅ Back to homepage</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Section -->
+    <section id="client">
+      <header class="hero">
+        <video id="mainVideo" autoplay muted class="hero-video">
+          Your browser does not support the video tag.
+        </video>
+
+        <div class="overlay">
+          <nav class="navbar">
+            <div class="logo">
+              <img src="./img/travel_icon.png" alt="Logo" />
+            </div>
+
+            <div class="nav-links">
+              <a href="#" class="active">Home</a>
+              <a href="#about-us">About</a>
+              <a href="#destinations">Destinations</a>
+              <a href="#testimonials">Testimonials</a>
+            </div>
+
+            <div class="auth-buttons">
+              <a href="#" class="sign-in" onclick="showLoginForm()">Sign In</a>
+              <a href="#" class="sign-up" onclick="showLoginForm()">Sign Up</a>
+            </div>
+          </nav>
+
+          <section class="hero-content">
+            <h1>TRAVEL<span style="color:#00ffff;">LY</span></h1>
+            <p>Explore the world with us!</p>
+            <div class="buttons">
+              <a href="#" class="discover-btn">Discover <span>↗</span></a>
+              <a href="#" class="connect-link">Connect With Us</a>
+            </div>
+          </section>
+
+          <section class="cardsheader">
+            <div class="cardheader">
+              <div class="card-image-container">
+                <img src="./img/city.jpg" alt="Abstract Art" class="card-image" />
+              </div>
+              <div class="card-content">
+                <h2 class="card-title">Next Adventure:</h2>
+                <p class="card-text">No two journeys are the same. That’s why we help you craft yours with care and passion.</p>
+              </div>
+              <div class="card-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 17.59L15.59 7H8V5h11v11h-2v-7.59L8.41 19z" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="cardheader">
+              <div class="card-image-container">
+                <img src="./img/city2.jpg" alt="Abstract Art" class="card-image" />
+              </div>
+              <div class="card-content">
+                <h2 class="card-title">Next Adventure:</h2>
+                <p class="card-text">No two journeys are the same. That’s why we help you craft yours with care and passion.</p>
+              </div>
+              <div class="card-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 17.59L15.59 7H8V5h11v11h-2v-7.59L8.41 19z" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="cardheader">
+              <div class="card-image-container">
+                <img src="./img/img1.jpg" alt="Abstract Art" class="card-image" />
+              </div>
+              <div class="card-content">
+                <h2 class="card-title">Next Adventure:</h2>
+                <p class="card-text">No two journeys are the same. That’s why we help you craft yours with care and passion.</p>
+              </div>
+              <div class="card-arrow">
+                <svg
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M5 17.59L15.59 7H8V5h11v11h-2v-7.59L8.41 19z" />
+                </svg>
+              </div>
+            </div>
+          </section>
+          <br />
+
+          <div class="video-thumbnails">
+            <button class="video-btn" data-video="./img/Island.mp4">1</button>
+            <button class="video-btn" data-video="./img/snow.mp4">2</button>
+            <button class="video-btn" data-video="./img/vidnature1.mp4">3</button>
+            <button class="video-btn" data-video="./img/city.mp4">4</button>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- About Us Section -->
+        <section id="about-us" class="about-section">
+          <div class="about-container">
+            <div class="about-text">
+              <h2>About Us</h2>
+              <p>
+                At <span class="highlight">Travelly</span>, we help you explore the world's most beautiful destinations with ease and safety. Our goal is to make your journey unforgettable.
+              </p>
+              <p>
+                Our values center around comfort, safety, and discovery. Our site was founded to share the love of travel with everyone and provide the best services for travelers.
+              </p>
+              <a href="#" class="btn-learn-more">Learn More</a>
+            </div>
+            <div class="about-media">
+              <img src="./img/img2.jpg" alt="Travel" />
+              <video controls autoplay loop muted playsinline>
+                <source src="./img/AuroraBorealis.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <video controls autoplay loop muted playsinline>
+                <source src="./img/snow.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <img src="./img/city2.jpg" alt="Travel" />
+            </div>
+          </div>
+        </section>
+
+        <section id="experience" class="experience-section">
+          <h2>We go beyond ordinary travel to deliver extraordinary experiences</h2>
+
+          <div class="experience-cards">
+            <div class="experience-card">
+              <h3>24/7 Concierge</h3>
+              <p>Our dedicated team is available around the clock to ensure your journey is seamless from start to finish.</p>
+            </div>
+            <div class="experience-card">
+              <h3>Exclusive Access</h3>
+              <p>VIP treatment at top hotels, private tours, and experiences unavailable to the general public.</p>
+            </div>
+            <div class="experience-card">
+              <h3>Tailored Itineraries</h3>
+              <p>Every trip is custom-designed to match your interests, pace, and travel style perfectly.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Destinations Section -->
+        <section id="destinations" class="destinations-section">
+          <h2 class="section-title">Our Incredible Destinations</h2>
+          <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search destinations..." autocomplete="off" />
+          </div>
+
+          <div id="destinationDetails" class="destination-details" style="display: none;"></div>
+          <div class="destinations-grid"></div>
+
+          <div class="show-all-button-container">
+            <button class="btn-show-all" onclick="retour()">Explore All Destinations <i class="fas fa-globe"></i></button>
+          </div>
+        </section>
+
+        <div class="section-separator-wave">
+          <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 60px; display: block;">
+            <path fill="#0f3d53" d="M0,30 C360,80 1080,-20 1440,30 L1440,60 L0,60 Z"></path>
+          </svg>
+        </div>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="testimonials-section">
+          <h2>Customer Testimonials</h2>
+          <div class="testimonials-container">
+            <button class="nav-button prev">&#10094;</button>
+            <div class="testimonial-cards-wrapper">
+              <div class="testimonial-card">
+                <img src="./img/user1.jpg" alt="Customer 1" class="testimonial-photo" />
+                <h3>Aymen Zagnouni</h3>
+                <p>Great experience with Travelly! Excellent service and constant support made my trip unforgettable.</p>
+                <div class="stars">★★★★★</div>
+              </div>
+              <div class="testimonial-card">
+                <img src="./img/user2.jpg" alt="Customer 2" class="testimonial-photo" />
+                <h3>Faysal Elalaoui</h3>
+                <p>A fully customized trip tailored to my wishes, very professional and helpful team.</p>
+                <div class="stars">★★★★★</div>
+              </div>
+              <div class="testimonial-card">
+                <img src="./img/user3.jpg" alt="Customer 4" class="testimonial-photo" />
+                <h3>Nassima Ait lamkadem</h3>
+                <p>Travelly made our family vacation planning so easy and enjoyable. Highly recommend their services!</p>
+                <div class="stars">★★★★★</div>
+              </div>
+              <div class="testimonial-card">
+                <img src="./img/user4.jpg" alt="Customer 5" class="testimonial-photo" />
+                <h3>Hichame Benmina </h3>
+                <p>Exceptional service and attention to detail. Every aspect of my journey was handled perfectly.</p>
+                <div class="stars">★★★★★</div>
+              </div>
+              <div class="testimonial-card">
+                <img src="./img/user5.jpg" alt="Customer 6" class="testimonial-photo" />
+                <h3>Anass Azyz</h3>
+                <p>Truly a seamless travel experience. From booking to return, everything was hassle-free and enjoyable.</p>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <button class="nav-button next">&#10095;</button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer Section -->
+      <footer class="site-footer">
+        <div class="footer-container">
+          <div class="footer-column about-us">
+            <a href="#" class="footer-logo">Travelly</a>
+            <p>Explore the world's most beautiful destinations with ease and safety. Your journey, our priority.</p>
+            <div class="social-links">
+              <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-column quick-links">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Our Services</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">FAQs</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column services">
+            <h3>Our Services</h3>
+            <ul>
+              <li><a href="#">Flight Booking</a></li>
+              <li><a href="#">Hotel Reservations</a></li>
+              <li><a href="#">Package Deals</a></li>
+              <li><a href="#">Visa Assistance</a></li>
+              <li><a href="#">Travel Insurance</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column contact-info">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Travel Lane, Dream City, World</p>
+            <p><i class="fas fa-phone-alt"></i> +1 (123) 456-7890</p>
+            <p><i class="fas fa-envelope"></i> info@travelly.com</p>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Travelly. All rights reserved.</p>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script src="index.js"></script>
+</body>
+</html>
