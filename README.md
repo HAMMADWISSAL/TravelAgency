@@ -7,7 +7,7 @@
 
 ## 🌍 Démo en ligne
 
-➡️ [Voir le site en ligne](https://hammadwissal.github.io/TravelAgency/) *(si GitHub Pages est activé)*
+➡️ [Voir le site en ligne](https://hammadwissal.github.io/TravelAgency/)
 
 ---
 
